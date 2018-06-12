@@ -7,11 +7,8 @@ class Pokemon
 
   #@@all = []
 
-  def initialize(props = {})
-    @name = props['name']
-    @type = props['type']
-    @id = props['id']
-    @hp = nil
+  def initialize(props)
+    props.each {|key, value| self.send(("#{key}="), value)}
     # @hp = nil
   end
 
@@ -42,7 +39,9 @@ class Pokemon
     WHERE id = ?
     FOO
     arr = db.execute(sql_string, id_num)
-    Pokemon.new("id" => arr.flatten[0], "name" => arr.flatten[1], "type" => arr.flatten[2], "hp" =>60)
+    pkmn = Pokemon.new(id: arr.flatten[0], name: arr.flatten[1], type: arr.flatten[2])
+    # pkmn.hp = 60
+    # pkmn
     # binding.pry
   end
 
