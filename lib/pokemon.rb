@@ -3,7 +3,7 @@ require 'pry'
 
 class Pokemon
 
-  attr_accessor :name, :type, :db, :id
+  attr_accessor :name, :type, :db, :id, :hp
 
   #@@all = []
 
@@ -11,6 +11,8 @@ class Pokemon
     @name = props['name']
     @type = props['type']
     @id = props['id']
+    @hp = nil
+    # @hp = nil
   end
 
   def self.all
@@ -40,17 +42,10 @@ class Pokemon
     WHERE id = ?
     FOO
     arr = db.execute(sql_string, id_num)
-
-    Pokemon.new("id" => arr.flatten[0], "name" => arr.flatten[1], "type" => arr.flatten[2] )
+    Pokemon.new("id" => arr.flatten[0], "name" => arr.flatten[1], "type" => arr.flatten[2], "hp" =>60)
     # binding.pry
   end
 
-  def remove
 
-  end
-
-  def update
-
-  end
 
 end
