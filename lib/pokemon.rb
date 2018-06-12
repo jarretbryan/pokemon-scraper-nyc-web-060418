@@ -25,24 +25,35 @@ class Pokemon
   end
 
   def self.save(name, type, db)
-    sql_string = <<-FOO
+    sql_string = <<-SQL_STRING
     INSERT INTO pokemon (name, type)
     VALUES (?, ?)
-    FOO
+    SQL_STRING
     db.execute(sql_string, name, type)
   end
 
   def self.find(id_num, db)
-    sql_string = <<-FOO
+    sql_string = <<-SQL_STRING
     SELECT *
     FROM pokemon
     WHERE id = ?
-    FOO
+    SQL_STRING
     arr = db.execute(sql_string, id_num)
-    pkmn = Pokemon.new(id: arr.flatten[0], name: arr.flatten[1], type: arr.flatten[2])
+    pkmn = Pokemon.new(id: arr.flatten[0], name: arr.flatten[1], type: arr.flatten[2], hp: arr.flatten[3])
     # pkmn.hp = 60
     # pkmn
     # binding.pry
+  end
+
+  def alter_hp(int, db)
+    sql_string = <<-SQL_STRING
+    UPDATE pokemon
+    SET hp = ?
+    WHERE id = ?
+    SQL_STRING
+
+    db.execute(sql_string, int, self.id)
+
   end
 
 
